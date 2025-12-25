@@ -9,7 +9,7 @@ int main(int argc, char **argv)
   kann_t **ann = (kann_t**) malloc(2 * sizeof(kann_t*));
 
   for (int i = 0; i < 2; i++) {
-    t_net[i] = kann_layer_input(2);
+    t_net[i] = kann_layer_input(3);
   
     for (int j = 0; j < 8; j++) {
       t_net[i] = kann_layer_dense(t_net[i], 128);
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
   struct gkyl_array *arr = gkyl_array_new(GKYL_DOUBLE, 2, ext_range.volume);
 
   for (int i = 0; i < 100; i++) {
-    const char *fmt = "data/TwoStream_Vlasov_P1/vlasov_twostream_p1-elc_%d.gkyl";
+    const char *fmt = "training_data/TwoStream_Vlasov_P1/vlasov_twostream_p1-elc_%d.gkyl";
     int sz = snprintf(0, 0, fmt, i);
     char file_nm[sz + 1];
     snprintf(file_nm, sizeof file_nm, fmt, i);
@@ -67,8 +67,9 @@ int main(int argc, char **argv)
         input_data[j][(i * 128 * 64) + count] = (float*) malloc(2 * sizeof(float));
         output_data[j][(i * 128 * 64) + count] = (float*) malloc(sizeof(float));
       
-        input_data[j][(i * 128 * 64) + count][0] = (float)i;
-        input_data[j][(i * 128 * 64) + count][1] = (float)count;
+        input_data[j][(i * 128 * 64) + count][0] = ((float)i) / 100.0;
+        input_data[j][(i * 128 * 64) + count][1] = ((float)(count / 64)) / 128.0;
+        input_data[j][(i * 128 * 64) + count][2] = ((float)(count % 64)) / 64.0;
         output_data[j][(i * 128 * 64) + count][0] = (float)c_array[j];
       }
 
@@ -81,11 +82,30 @@ int main(int argc, char **argv)
   }
 
   for (int i = 0; i < 2; i++) {
-    const char *fmt = "twostream_vlasov_p1_%d_neural_net.dat";
+    const char *fmt = "model_weights/twostream_vlasov_p1_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
     char file_nm[sz + 1];
     snprintf(file_nm, sizeof file_nm, fmt, i);
   
     kann_save(file_nm, ann[i]);
   }
+
+  for (int i = 0; i < 2; i++) {
+    kann_delete(ann[i]);
+  }
+  free(ann);
+  free(t_net);
+
+  for (int i = 0; i < 2; i++) {
+    for (int j = 0; j < 128 * 64 * 100; j++) {
+      free(input_data[i][j]);
+      free(output_data[i][j]);
+    }
+
+    free(input_data[i]);
+    free(output_data[i]);
+  }
+
+  free(input_data);
+  free(output_data);
 }
