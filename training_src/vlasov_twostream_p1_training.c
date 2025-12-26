@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     t_net[i] = kann_layer_input(3);
   
     for (int j = 0; j < 8; j++) {
-      t_net[i] = kann_layer_dense(t_net[i], 128);
+      t_net[i] = kann_layer_dense(t_net[i], 256);
       t_net[i] = kad_tanh(t_net[i]);
     }
 
@@ -24,8 +24,8 @@ int main(int argc, char **argv)
   float ***output_data = (float***) malloc(2 * sizeof(float**));
   
   for (int i = 0; i < 2; i++) {
-    input_data[i] = (float**) malloc(128 * 64 * 100 * sizeof(float*));
-    output_data[i] = (float**) malloc(128 * 64 * 100 * sizeof(float*));
+    input_data[i] = (float**) malloc(128 * 128 * 100 * sizeof(float*));
+    output_data[i] = (float**) malloc(128 * 128 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm;
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
   double lower[] = { -10.0 * M_PI, -24.0 };
   double upper[] = { 10.0 * M_PI, 24.0 };
-  int cells_new[] = { 128, 64 };
+  int cells_new[] = { 128, 128 };
   struct gkyl_rect_grid grid;
   gkyl_rect_grid_init(&grid, 2, lower, upper, cells_new);
 
@@ -64,13 +64,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr, loc);
 
       for (int j = 0; j < 2; j++) {
-        input_data[j][(i * 128 * 64) + count] = (float*) malloc(2 * sizeof(float));
-        output_data[j][(i * 128 * 64) + count] = (float*) malloc(sizeof(float));
+        input_data[j][(i * 128 * 128) + count] = (float*) malloc(3 * sizeof(float));
+        output_data[j][(i * 128 * 128) + count] = (float*) malloc(sizeof(float));
       
-        input_data[j][(i * 128 * 64) + count][0] = ((float)i) / 100.0;
-        input_data[j][(i * 128 * 64) + count][1] = ((float)(count / 64)) / 128.0;
-        input_data[j][(i * 128 * 64) + count][2] = ((float)(count % 64)) / 64.0;
-        output_data[j][(i * 128 * 64) + count][0] = (float)c_array[j];
+        input_data[j][(i * 128 * 128) + count][0] = ((float)i) / 100.0;
+        input_data[j][(i * 128 * 128) + count][1] = ((float)(count / 128)) / 128.0;
+        input_data[j][(i * 128 * 128) + count][2] = ((float)(count % 128)) / 128.0;
+        output_data[j][(i * 128 * 128) + count][0] = (float)c_array[j];
       }
 
       count += 1;
@@ -78,7 +78,8 @@ int main(int argc, char **argv)
   }
 
   for (int i = 0; i < 2; i++) {
-    kann_train_fnn1(ann[i], 0.0001f, 64, 50, 10, 0.1f, 128 * 64 * 100, input_data[i], output_data[i]);
+    kann_mt(ann[i], 12, 100);
+    kann_train_fnn1(ann[i], 0.0001f, 64, 50, 10, 0.1f, 128 * 128 * 100, input_data[i], output_data[i]);
   }
 
   for (int i = 0; i < 2; i++) {
@@ -97,7 +98,7 @@ int main(int argc, char **argv)
   free(t_net);
 
   for (int i = 0; i < 2; i++) {
-    for (int j = 0; j < 128 * 64 * 100; j++) {
+    for (int j = 0; j < 128 * 128 * 100; j++) {
       free(input_data[i][j]);
       free(output_data[i][j]);
     }

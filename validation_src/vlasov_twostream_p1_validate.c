@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv)
 {
-  kann_t **ann = (kann_t**) malloc(3 * sizeof(kann_t*));
+  kann_t **ann = (kann_t**) malloc(2 * sizeof(kann_t*));
 
   for (int i = 0; i < 2; i++) { 
     const char *fmt = "model_weights/twostream_vlasov_p1_%d_neural_net.dat";
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
   double lower[] = { -10.0 * M_PI, -24.0 };
   double upper[] = { 10.0 * M_PI, 24.0 };
-  int cells_new[] = { 128, 64 };
+  int cells_new[] = { 128, 128 };
   struct gkyl_rect_grid grid;
   gkyl_rect_grid_init(&grid, 2, lower, upper, cells_new);
 
@@ -63,8 +63,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 64)) / 128.0;
-        input_data[2] = ((float)(count % 64)) / 64.0;
+        input_data[1] = ((float)(count / 128)) / 128.0;
+        input_data[2] = ((float)(count % 128)) / 128.0;
       
         output_data = kann_apply1(ann[j], input_data);
 
