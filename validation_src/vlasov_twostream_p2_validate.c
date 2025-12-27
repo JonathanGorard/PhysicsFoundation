@@ -6,9 +6,9 @@
 
 int main(int argc, char **argv)
 {
-  kann_t **ann = (kann_t**) malloc(3 * sizeof(kann_t*));
+  kann_t **ann = (kann_t**) malloc(8 * sizeof(kann_t*));
 
-  for (int i = 0; i < 3; i++) { 
+  for (int i = 0; i < 8; i++) { 
     const char *fmt = "model_weights/twostream_vlasov_p2_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
     char file_nm[sz + 1];
@@ -40,13 +40,13 @@ int main(int argc, char **argv)
   struct gkyl_range ext_range;
   gkyl_create_grid_ranges(&grid, nghost, &ext_range, &range);
 
-  struct gkyl_array *arr = gkyl_array_new(GKYL_DOUBLE, 2, ext_range.volume);
+  struct gkyl_array *arr = gkyl_array_new(GKYL_DOUBLE, 8, ext_range.volume);
 
   for (int i = 0; i < 100; i++) {
     const char *fmt = "training_data/TwoStream_Vlasov_P2/vlasov_twostream_p2-elc_%d.gkyl";
-    int sz = snprintf(0, 0, fmt, i);
+    int sz = snprintf(0, 0, fmt, 0);
     char file_nm[sz + 1];
-    snprintf(file_nm, sizeof file_nm, fmt, i);
+    snprintf(file_nm, sizeof file_nm, fmt, 0);
 
     int status = gkyl_comm_array_read(comm, &grid, &range, arr, file_nm);
 
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
       long loc = gkyl_range_idx(&range, iter.idx);
       double *array_new = gkyl_array_fetch(arr, loc);
 
-      for (int j = 0; j < 3; j++) {
+      for (int j = 0; j < 8; j++) {
         float *input_data = (float*) malloc(3 * sizeof(float));
         const float *output_data;
 
@@ -92,7 +92,7 @@ int main(int argc, char **argv)
     gkyl_comm_array_write(comm, &grid, &range, mt, arr, file_nm_new);
   }
 
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 8; i++) {
     kann_delete(ann[i]);
   }
   free(ann);
