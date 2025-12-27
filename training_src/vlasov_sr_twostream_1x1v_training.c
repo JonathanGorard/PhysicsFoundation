@@ -5,10 +5,10 @@
 
 int main(int argc, char **argv)
 {
-  kad_node_t **t_net = (kad_node_t**) malloc(3 * sizeof(kad_node_t*));
-  kann_t **ann = (kann_t**) malloc(3 * sizeof(kann_t*));
+  kad_node_t **t_net = (kad_node_t**) malloc(8 * sizeof(kad_node_t*));
+  kann_t **ann = (kann_t**) malloc(8 * sizeof(kann_t*));
 
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 8; i++) {
     t_net[i] = kann_layer_input(3);
   
     for (int j = 0; j < 8; j++) {
@@ -20,10 +20,10 @@ int main(int argc, char **argv)
     ann[i] = kann_new(t_net[i], 0);
   }
 
-  float ***input_data = (float***) malloc(3 * sizeof(float**));
-  float ***output_data = (float***) malloc(3 * sizeof(float**));
+  float ***input_data = (float***) malloc(8 * sizeof(float**));
+  float ***output_data = (float***) malloc(8 * sizeof(float**));
   
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 8; i++) {
     input_data[i] = (float**) malloc(128 * 128 * 100 * sizeof(float*));
     output_data[i] = (float**) malloc(128 * 128 * 100 * sizeof(float*));
   }
@@ -45,7 +45,7 @@ int main(int argc, char **argv)
   struct gkyl_range ext_range;
   gkyl_create_grid_ranges(&grid, nghost, &ext_range, &range);
 
-  struct gkyl_array *arr = gkyl_array_new(GKYL_DOUBLE, 2, ext_range.volume);
+  struct gkyl_array *arr = gkyl_array_new(GKYL_DOUBLE, 8, ext_range.volume);
 
   for (int i = 0; i < 100; i++) {
     const char *fmt = "training_data/TwoStream_SR_Vlasov_P2/vlasov_sr_twostream_1x1v-elc_%d.gkyl";
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
       long loc = gkyl_range_idx(&range, iter.idx);
       const double *c_array = gkyl_array_cfetch(arr, loc);
 
-      for (int j = 0; j < 3; j++) {
+      for (int j = 0; j < 8; j++) {
         input_data[j][(i * 128 * 128) + count] = (float*) malloc(3 * sizeof(float));
         output_data[j][(i * 128 * 128) + count] = (float*) malloc(sizeof(float));
       
@@ -77,12 +77,10 @@ int main(int argc, char **argv)
     }
   }
 
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 8; i++) {
     kann_mt(ann[i], 12, 100);
     kann_train_fnn1(ann[i], 0.0001f, 64, 50, 10, 0.1f, 128 * 128 * 100, input_data[i], output_data[i]);
-  }
 
-  for (int i = 0; i < 3; i++) {
     const char *fmt = "model_weights/twostream_sr_vlasov_p2_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
     char file_nm[sz + 1];
@@ -91,13 +89,13 @@ int main(int argc, char **argv)
     kann_save(file_nm, ann[i]);
   }
 
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 8; i++) {
     kann_delete(ann[i]);
   }
   free(ann);
   free(t_net);
 
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 8; i++) {
     for (int j = 0; j < 128 * 128 * 100; j++) {
       free(input_data[i][j]);
       free(output_data[i][j]);

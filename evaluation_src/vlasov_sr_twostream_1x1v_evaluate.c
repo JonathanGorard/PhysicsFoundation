@@ -5,9 +5,9 @@
 
 int main(int argc, char **argv)
 {
-  printf("*********************************************\n");
-  printf("Two-Stream Instability Evaluation Benchmarks:\n");
-  printf("*********************************************\n\n");
+  printf("**********************************************************\n");
+  printf("Relativistic Two-Stream Instability Evaluation Benchmarks:\n");
+  printf("**********************************************************\n\n");
 
   struct gkyl_comm *comm;
   comm = gkyl_null_comm_inew( &(struct gkyl_null_comm_inp) {
@@ -15,8 +15,8 @@ int main(int argc, char **argv)
     }
   );
 
-  double lower[] = { -10.0 * M_PI, -24.0 };
-  double upper[] = { 10.0 * M_PI, 24.0 };
+  double lower[] = { -2.0 * M_PI, -8.0 };
+  double upper[] = { 2.0 * M_PI, 8.0 };
   int cells_new[] = { 128, 128 };
   struct gkyl_rect_grid grid;
   gkyl_rect_grid_init(&grid, 2, lower, upper, cells_new);
@@ -29,14 +29,14 @@ int main(int argc, char **argv)
   struct gkyl_array *arr_training_final = gkyl_array_new(GKYL_DOUBLE, 8, ext_range.volume);
   struct gkyl_array *arr_validation_final = gkyl_array_new(GKYL_DOUBLE, 8, ext_range.volume);
 
-  const char *fmt_training_final = "training_data/TwoStream_Vlasov_P2/vlasov_twostream_p2-elc_%d.gkyl";
+  const char *fmt_training_final = "training_data/TwoStream_SR_Vlasov_P2/vlasov_sr_twostream_1x1v-elc_%d.gkyl";
   int sz_training_final = snprintf(0, 0, fmt_training_final, 99);
   char file_nm_training_final[sz_training_final + 1];
   snprintf(file_nm_training_final, sizeof file_nm_training_final, fmt_training_final, 99);
 
   int status_training_final = gkyl_comm_array_read(comm, &grid, &range, arr_training_final, file_nm_training_final);
 
-  const char *fmt_validation_final = "validation_data/TwoStream_Vlasov_P2/vlasov_twostream_p2-elc_%d.gkyl";
+  const char *fmt_validation_final = "validation_data/TwoStream_SR_Vlasov_P2/vlasov_sr_twostream_1x1v-elc_%d.gkyl";
   int sz_validation_final = snprintf(0, 0, fmt_validation_final, 99);
   char file_nm_validation_final[sz_validation_final + 1];
   snprintf(file_nm_validation_final, sizeof file_nm_validation_final, fmt_validation_final, 99);
@@ -102,14 +102,14 @@ int main(int argc, char **argv)
     struct gkyl_array *arr_training_total = gkyl_array_new(GKYL_DOUBLE, 8, ext_range.volume);
     struct gkyl_array *arr_validation_total = gkyl_array_new(GKYL_DOUBLE, 8, ext_range.volume);
 
-    const char *fmt_training_total = "training_data/TwoStream_Vlasov_P2/vlasov_twostream_p2-elc_%d.gkyl";
+    const char *fmt_training_total = "training_data/TwoStream_SR_Vlasov_P2/vlasov_sr_twostream_1x1v-elc_%d.gkyl";
     int sz_training_total = snprintf(0, 0, fmt_training_total, i);
     char file_nm_training_total[sz_training_total + 1];
     snprintf(file_nm_training_total, sizeof file_nm_training_total, fmt_training_total, i);
 
     int status_training_total = gkyl_comm_array_read(comm, &grid, &range, arr_training_total, file_nm_training_total);
 
-    const char *fmt_validation_total = "validation_data/TwoStream_Vlasov_P2/vlasov_twostream_p2-elc_%d.gkyl";
+    const char *fmt_validation_total = "validation_data/TwoStream_SR_Vlasov_P2/vlasov_sr_twostream_1x1v-elc_%d.gkyl";
     int sz_validation_total = snprintf(0, 0, fmt_validation_total, i);
     char file_nm_validation_total[sz_validation_total + 1];
     snprintf(file_nm_validation_total, sizeof file_nm_validation_total, fmt_validation_total, i);
