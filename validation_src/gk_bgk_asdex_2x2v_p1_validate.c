@@ -96,4 +96,95 @@ int main(int argc, char **argv)
     kann_delete(ann[i]);
   }
   free(ann);
+
+  kann_t **ann_elcM1 = (kann_t**) malloc(4 * sizeof(kann_t*));
+
+  for (int i = 0; i < 4; i++) { 
+    const char *fmt = "model_weights/gk_bgk_asdex_2x2v_p1_elcM1_%d_neural_net.dat";
+    int sz = snprintf(0, 0, fmt, i);
+    char file_nm[sz + 1];
+    snprintf(file_nm, sizeof file_nm, fmt, i);
+
+    FILE *fptr;
+    fptr = fopen(file_nm, "r");
+    if (fptr != NULL) {
+      ann_elcM1[i] = kann_load(file_nm);
+    
+      fclose(fptr);
+    }
+  }
+
+  struct gkyl_comm *comm_elcM1;
+  comm_elcM1 = gkyl_null_comm_inew( &(struct gkyl_null_comm_inp) {
+      .use_gpu = false  
+    }
+  );
+
+  double lower_elcM1[] = { 0.15, -M_PI + 1.0e-14 };
+  double upper_elcM1[] = { 0.172, M_PI - 1.0e-14 };
+  int cells_new_elcM1[] = { 128, 128 };
+  struct gkyl_rect_grid grid_elcM1;
+  gkyl_rect_grid_init(&grid_elcM1, 2, lower_elcM1, upper_elcM1, cells_new_elcM1);
+
+  int nghost_elcM1[] = { 2, 2 };
+  struct gkyl_range range_elcM1;
+  struct gkyl_range ext_range_elcM1;
+  gkyl_create_grid_ranges(&grid_elcM1, nghost_elcM1, &ext_range_elcM1, &range_elcM1);
+
+  struct gkyl_array *arr_elcM1 = gkyl_array_new(GKYL_DOUBLE, 4, ext_range_elcM1.volume);
+
+  for (int i = 0; i < 100; i++) {
+    const char *fmt = "training_data/ASDEX_Gyrokinetic_P1/gk_bgk_asdex_2x2v_p1-elc_M1_%d.gkyl";
+    int sz = snprintf(0, 0, fmt, 0);
+    char file_nm[sz + 1];
+    snprintf(file_nm, sizeof file_nm, fmt, 0);
+
+    int status = gkyl_comm_array_read(comm_elcM1, &grid_elcM1, &range_elcM1, arr_elcM1, file_nm);
+
+    struct gkyl_range_iter iter;
+    gkyl_range_iter_init(&iter, &range_elcM1);
+
+    long count = 0;
+    while (gkyl_range_iter_next(&iter)) {
+      long loc = gkyl_range_idx(&range_elcM1, iter.idx);
+      double *array_new = gkyl_array_fetch(arr_elcM1, loc);
+
+      for (int j = 0; j < 4; j++) {
+        float *input_data = (float*) malloc(3 * sizeof(float));
+        const float *output_data;
+
+        input_data[0] = ((float)i) / 100.0;
+        input_data[1] = ((float)(count / 128)) / 128.0;
+        input_data[2] = ((float)(count % 128)) / 128.0;
+      
+        output_data = kann_apply1(ann_elcM1[j], input_data);
+
+        array_new[j] = output_data[0] * pow(10.0, 22.0);
+
+        free(input_data);
+      }
+
+      count += 1;
+    }
+
+    const char *fmt_new = "validation_data/ASDEX_Gyrokinetic_P1/gk_bgk_asdex_2x2v_p1-elc_M1_%d.gkyl";
+    int sz_new = snprintf(0, 0, fmt_new, i);
+    char file_nm_new[sz_new + 1];
+    snprintf(file_nm_new, sizeof file_nm_new, fmt_new, i);
+
+    struct gkyl_msgpack_data *mt = gk_array_meta_new( (struct gyrokinetic_output_meta) {
+      .frame = i,
+      .stime = (double)i,
+      .poly_order = 1,
+      .basis_type = "serendipity",
+    }, GKYL_GK_META_NONE, 0
+  );
+
+    gkyl_comm_array_write(comm_elcM1, &grid_elcM1, &range_elcM1, mt, arr_elcM1, file_nm_new);
+  }
+
+  for (int i = 0; i < 4; i++) {
+    kann_delete(ann_elcM1[i]);
+  }
+  free(ann_elcM1);
 }
