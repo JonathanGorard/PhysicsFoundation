@@ -46,9 +46,11 @@ int main(int argc, char **argv)
   struct gkyl_range_iter iter;
   gkyl_range_iter_init(&iter, &range);
 
+  double final_max[8];
   double l_infinity_final[8];
   double l_2_final[8];
-  for (int i = 0; i < 8; i++) { 
+  for (int i = 0; i < 8; i++) {
+    final_max[i] = 0.0;
     l_infinity_final[i] = 0.0;
     l_2_final[i] = 0.0;
   }
@@ -65,9 +67,14 @@ int main(int argc, char **argv)
       }
       
       l_2_final[i] += fabs(array_training_final[i] - array_validation_final[i]) * fabs(array_training_final[i] - array_validation_final[i]);
+
+      if (fabs(array_training_final[i]) > final_max[i]) {
+        final_max[i] = fabs(array_training_final[i]);
+      }
     }
   }
 
+  double all_final_max = 0.0;
   double l_infinity_final_all = 0.0;
   double l_2_final_all = 0.0;
   for (int i = 0; i < 8; i++) {
@@ -77,23 +84,33 @@ int main(int argc, char **argv)
 
     l_2_final_all += l_2_final[i];
     l_2_final[i] = sqrt(l_2_final[i]);
+
+    if (final_max[i] > all_final_max) {
+      all_final_max = final_max[i];
+    }
   }
   l_2_final_all = sqrt(l_2_final_all);
 
   printf("Final Frame Prediction:\n\n");
 
   for (int i = 0; i < 8; i++) {
-    printf("  Criterion %d:\n", i + 1);
-    printf("    L^infinity Error: %f\n", l_infinity_final[i]);
-    printf("    L^2 Error: %f\n", l_2_final[i]);
+    printf("  Component %d:\n", i + 1);
+    printf("    Relative L^infinity Error: %f\n", l_infinity_final[i] / final_max[i]);
+    printf("    Absolute L^infinity Error: %f\n", l_infinity_final[i]);
+    printf("    Relative L^2 Error: %f\n", l_2_final[i] / final_max[i]);
+    printf("    Absolute L^2 Error: %f\n", l_2_final[i]);
   }
   printf("  Overall:\n");
-  printf("    L^infinity Error: %f\n", l_infinity_final_all);
-  printf("    L^2 Error: %f\n\n", l_2_final_all);
+  printf("    Relative L^infinity Error: %f\n", l_infinity_final_all / all_final_max);
+  printf("    Absolute L^infinity Error: %f\n", l_infinity_final_all);
+  printf("    Relative L^2 Error: %f\n", l_2_final_all / all_final_max);
+  printf("    Absolute L^2 Error: %f\n\n", l_2_final_all);
 
+  double total_max[8];
   double l_infinity_total[8];
   double l_2_total[8];
-  for (int i = 0; i < 8; i++) { 
+  for (int i = 0; i < 8; i++) {
+    total_max[i] = 0.0;
     l_infinity_total[i] = 0.0;
     l_2_total[i] = 0.0;
   }
@@ -131,10 +148,15 @@ int main(int argc, char **argv)
         }
         
         l_2_total[j] += fabs(array_training_total[j] - array_validation_total[j]) * fabs(array_training_total[j] - array_validation_total[j]);
+
+        if (fabs(array_training_total[j]) > total_max[j]) {
+          total_max[j] = fabs(array_training_total[j]);
+        }
       }
     }
   }
 
+  double all_total_max = 0.0;
   double l_infinity_total_all = 0.0;
   double l_2_total_all = 0.0;
   for (int i = 0; i < 8; i++) {
@@ -144,17 +166,27 @@ int main(int argc, char **argv)
 
     l_2_total_all += l_2_total[i];
     l_2_total[i] = sqrt(l_2_total[i]);
+
+    if (total_max[i] > all_total_max) {
+      all_total_max = total_max[i];
+    }
   }
   l_2_total_all = sqrt(l_2_total_all);
 
   printf("All Frame Prediction:\n\n");
 
   for (int i = 0; i < 8; i++) {
-    printf("  Criterion %d:\n", i + 1);
-    printf("    L^infinity Error: %f\n", l_infinity_total[i]);
-    printf("    L^2 Error: %f\n", l_2_total[i]);
+    printf("  Component %d:\n", i + 1);
+    printf("    Relative L^infinity Error: %f\n", l_infinity_total[i] / total_max[i]);
+    printf("    Absolute L^infinity Error: %f\n", l_infinity_total[i]);
+    printf("    Relative L^2 Error: %f\n", l_2_total[i] / total_max[i]);
+    printf("    Absolute L^2 Error: %f\n", l_2_total[i]);
   }
   printf("  Overall:\n");
-  printf("    L^infinity Error: %f\n", l_infinity_total_all);
-  printf("    L^2 Error: %f\n", l_2_total_all);
+  printf("    Relative L^infinity Error: %f\n", l_infinity_total_all / all_total_max);
+  printf("    Absolute L^infinity Error: %f\n", l_infinity_total_all);
+  printf("    Relative L^2 Error: %f\n", l_2_total_all / all_total_max);
+  printf("    Absolute L^2 Error: %f\n", l_2_total_all);
+
+  return 0;
 }
