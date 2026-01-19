@@ -24,8 +24,8 @@ int main(int argc, char **argv)
   float ***output_data_block0 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_block0[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
-    output_data_block0[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
+    input_data_block0[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
+    output_data_block0[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_block0;
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
   double lower_block0[] = { -3.717531 * pow(10.0, -2.0), -3.141593 };
   double upper_block0[] = { -3.544025 * pow(10.0, -2.0), 6.260430 * pow(10.0, -1.0) };
-  int cells_new_block0[] = { 32, 24 };
+  int cells_new_block0[] = { 64, 48 };
   struct gkyl_rect_grid grid_block0;
   gkyl_rect_grid_init(&grid_block0, 2, lower_block0, upper_block0, cells_new_block0);
 
@@ -64,13 +64,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_block0, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_block0[j][(i * 32 * 24) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_block0[j][(i * 32 * 24) + count] = (float*) malloc(sizeof(float));
+        input_data_block0[j][(i * 64 * 48) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_block0[j][(i * 64 * 48) + count] = (float*) malloc(sizeof(float));
       
-        input_data_block0[j][(i * 32 * 24) + count][0] = ((float)i) / 100.0;
-        input_data_block0[j][(i * 32 * 24) + count][1] = ((float)(count / 24)) / 32.0;
-        input_data_block0[j][(i * 32 * 24) + count][2] = ((float)(count % 24)) / 24.0;
-        output_data_block0[j][(i * 32 * 24) + count][0] = ((float)c_array[j]) / 900.0;
+        input_data_block0[j][(i * 64 * 48) + count][0] = ((float)i) / 100.0;
+        input_data_block0[j][(i * 64 * 48) + count][1] = ((float)(count / 48)) / 64.0;
+        input_data_block0[j][(i * 64 * 48) + count][2] = ((float)(count % 48)) / 48.0;
+        output_data_block0[j][(i * 64 * 48) + count][0] = ((float)c_array[j]) / 900.0;
       }
 
       count += 1;
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_block0[i], 12, 100);
-    kann_train_fnn1(ann_block0[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 24 * 100, input_data_block0[i], output_data_block0[i]);
+    kann_train_fnn1(ann_block0[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 48 * 100, input_data_block0[i], output_data_block0[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_b0_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
   free(t_net_block0);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 24 * 100; j++) {
+    for (int j = 0; j < 64 * 48 * 100; j++) {
       free(input_data_block0[i][j]);
       free(output_data_block0[i][j]);
     }
@@ -127,8 +127,8 @@ int main(int argc, char **argv)
   float ***output_data_block1 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_block1[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
-    output_data_block1[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
+    input_data_block1[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
+    output_data_block1[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_block1;
@@ -139,7 +139,7 @@ int main(int argc, char **argv)
 
   double lower_block1[] = { -3.544025 * pow(10.0, -2.0), -3.141593 };
   double upper_block1[] = { -3.370519 * pow(10.0, -2.0), -2.271087 };
-  int cells_new_block1[] = { 32, 24 };
+  int cells_new_block1[] = { 64, 48 };
   struct gkyl_rect_grid grid_block1;
   gkyl_rect_grid_init(&grid_block1, 2, lower_block1, upper_block1, cells_new_block1);
 
@@ -167,13 +167,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_block1, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_block1[j][(i * 32 * 24) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_block1[j][(i * 32 * 24) + count] = (float*) malloc(sizeof(float));
+        input_data_block1[j][(i * 64 * 48) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_block1[j][(i * 64 * 48) + count] = (float*) malloc(sizeof(float));
       
-        input_data_block1[j][(i * 32 * 24) + count][0] = ((float)i) / 100.0;
-        input_data_block1[j][(i * 32 * 24) + count][1] = ((float)(count / 24)) / 32.0;
-        input_data_block1[j][(i * 32 * 24) + count][2] = ((float)(count % 24)) / 24.0;
-        output_data_block1[j][(i * 32 * 24) + count][0] = ((float)c_array[j]) / 900.0;
+        input_data_block1[j][(i * 64 * 48) + count][0] = ((float)i) / 100.0;
+        input_data_block1[j][(i * 64 * 48) + count][1] = ((float)(count / 48)) / 64.0;
+        input_data_block1[j][(i * 64 * 48) + count][2] = ((float)(count % 48)) / 48.0;
+        output_data_block1[j][(i * 64 * 48) + count][0] = ((float)c_array[j]) / 900.0;
       }
 
       count += 1;
@@ -182,7 +182,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_block1[i], 12, 100);
-    kann_train_fnn1(ann_block1[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 24 * 100, input_data_block1[i], output_data_block1[i]);
+    kann_train_fnn1(ann_block1[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 48 * 100, input_data_block1[i], output_data_block1[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_b1_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
   free(t_net_block1);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 24 * 100; j++) {
+    for (int j = 0; j < 64 * 48 * 100; j++) {
       free(input_data_block1[i][j]);
       free(output_data_block1[i][j]);
     }
@@ -230,8 +230,8 @@ int main(int argc, char **argv)
   float ***output_data_block2 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_block2[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
-    output_data_block2[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
+    input_data_block2[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
+    output_data_block2[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_block2;
@@ -242,7 +242,7 @@ int main(int argc, char **argv)
 
   double lower_block2[] = { -3.544025 * pow(10.0, -2.0), -2.271087};
   double upper_block2[] = { -3.370519 * pow(10.0, -2.0), 0.0 };
-  int cells_new_block2[] = { 32, 48 };
+  int cells_new_block2[] = { 64, 96 };
   struct gkyl_rect_grid grid_block2;
   gkyl_rect_grid_init(&grid_block2, 2, lower_block2, upper_block2, cells_new_block2);
 
@@ -270,13 +270,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_block2, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_block2[j][(i * 32 * 48) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_block2[j][(i * 32 * 48) + count] = (float*) malloc(sizeof(float));
+        input_data_block2[j][(i * 64 * 96) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_block2[j][(i * 64 * 96) + count] = (float*) malloc(sizeof(float));
       
-        input_data_block2[j][(i * 32 * 48) + count][0] = ((float)i) / 100.0;
-        input_data_block2[j][(i * 32 * 48) + count][1] = ((float)(count / 48)) / 32.0;
-        input_data_block2[j][(i * 32 * 48) + count][2] = ((float)(count % 48)) / 48.0;
-        output_data_block2[j][(i * 32 * 48) + count][0] = ((float)c_array[j]) / 900.0;
+        input_data_block2[j][(i * 64 * 96) + count][0] = ((float)i) / 100.0;
+        input_data_block2[j][(i * 64 * 96) + count][1] = ((float)(count / 96)) / 64.0;
+        input_data_block2[j][(i * 64 * 96) + count][2] = ((float)(count % 96)) / 96.0;
+        output_data_block2[j][(i * 64 * 96) + count][0] = ((float)c_array[j]) / 900.0;
       }
 
       count += 1;
@@ -285,7 +285,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_block2[i], 12, 100);
-    kann_train_fnn1(ann_block2[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 48 * 100, input_data_block2[i], output_data_block2[i]);
+    kann_train_fnn1(ann_block2[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 96 * 100, input_data_block2[i], output_data_block2[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_b2_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -302,7 +302,7 @@ int main(int argc, char **argv)
   free(t_net_block2);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 48 * 100; j++) {
+    for (int j = 0; j < 64 * 96 * 100; j++) {
       free(input_data_block2[i][j]);
       free(output_data_block2[i][j]);
     }
@@ -333,8 +333,8 @@ int main(int argc, char **argv)
   float ***output_data_block3 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_block3[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
-    output_data_block3[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
+    input_data_block3[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
+    output_data_block3[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_block3;
@@ -345,7 +345,7 @@ int main(int argc, char **argv)
 
   double lower_block3[] = { -3.544025 * pow(10.0, -2.0), 0.0 };
   double upper_block3[] = { -3.370519 * pow(10.0, -2.0), 2.339689 };
-  int cells_new_block3[] = { 32, 48 };
+  int cells_new_block3[] = { 64, 96 };
   struct gkyl_rect_grid grid_block3;
   gkyl_rect_grid_init(&grid_block3, 2, lower_block3, upper_block3, cells_new_block3);
 
@@ -373,13 +373,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_block3, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_block3[j][(i * 32 * 48) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_block3[j][(i * 32 * 48) + count] = (float*) malloc(sizeof(float));
+        input_data_block3[j][(i * 64 * 96) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_block3[j][(i * 64 * 96) + count] = (float*) malloc(sizeof(float));
       
-        input_data_block3[j][(i * 32 * 48) + count][0] = ((float)i) / 100.0;
-        input_data_block3[j][(i * 32 * 48) + count][1] = ((float)(count / 48)) / 32.0;
-        input_data_block3[j][(i * 32 * 48) + count][2] = ((float)(count % 48)) / 48.0;
-        output_data_block3[j][(i * 32 * 48) + count][0] = ((float)c_array[j]) / 900.0;
+        input_data_block3[j][(i * 64 * 96) + count][0] = ((float)i) / 100.0;
+        input_data_block3[j][(i * 64 * 96) + count][1] = ((float)(count / 96)) / 64.0;
+        input_data_block3[j][(i * 64 * 96) + count][2] = ((float)(count % 96)) / 96.0;
+        output_data_block3[j][(i * 64 * 96) + count][0] = ((float)c_array[j]) / 900.0;
       }
 
       count += 1;
@@ -388,7 +388,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_block3[i], 12, 100);
-    kann_train_fnn1(ann_block3[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 48 * 100, input_data_block3[i], output_data_block3[i]);
+    kann_train_fnn1(ann_block3[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 96 * 100, input_data_block3[i], output_data_block3[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_b3_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -405,7 +405,7 @@ int main(int argc, char **argv)
   free(t_net_block3);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 48 * 100; j++) {
+    for (int j = 0; j < 64 * 96 * 100; j++) {
       free(input_data_block3[i][j]);
       free(output_data_block3[i][j]);
     }
@@ -436,8 +436,8 @@ int main(int argc, char **argv)
   float ***output_data_block4 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_block4[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
-    output_data_block4[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
+    input_data_block4[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
+    output_data_block4[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_block4;
@@ -448,7 +448,7 @@ int main(int argc, char **argv)
 
   double lower_block4[] = { -3.544025 * pow(10.0, -2.0), 2.339689 };
   double upper_block4[] = { -3.370519 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_block4[] = { 32, 24 };
+  int cells_new_block4[] = { 64, 48 };
   struct gkyl_rect_grid grid_block4;
   gkyl_rect_grid_init(&grid_block4, 2, lower_block4, upper_block4, cells_new_block4);
 
@@ -476,13 +476,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_block4, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_block4[j][(i * 32 * 24) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_block4[j][(i * 32 * 24) + count] = (float*) malloc(sizeof(float));
+        input_data_block4[j][(i * 64 * 48) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_block4[j][(i * 64 * 48) + count] = (float*) malloc(sizeof(float));
       
-        input_data_block4[j][(i * 32 * 24) + count][0] = ((float)i) / 100.0;
-        input_data_block4[j][(i * 32 * 24) + count][1] = ((float)(count / 24)) / 32.0;
-        input_data_block4[j][(i * 32 * 24) + count][2] = ((float)(count % 24)) / 24.0;
-        output_data_block4[j][(i * 32 * 24) + count][0] = ((float)c_array[j]) / 900.0;
+        input_data_block4[j][(i * 64 * 48) + count][0] = ((float)i) / 100.0;
+        input_data_block4[j][(i * 64 * 48) + count][1] = ((float)(count / 48)) / 64.0;
+        input_data_block4[j][(i * 64 * 48) + count][2] = ((float)(count % 48)) / 48.0;
+        output_data_block4[j][(i * 64 * 48) + count][0] = ((float)c_array[j]) / 900.0;
       }
 
       count += 1;
@@ -491,7 +491,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_block4[i], 12, 100);
-    kann_train_fnn1(ann_block4[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 24 * 100, input_data_block4[i], output_data_block4[i]);
+    kann_train_fnn1(ann_block4[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 48 * 100, input_data_block4[i], output_data_block4[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_b4_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -508,7 +508,7 @@ int main(int argc, char **argv)
   free(t_net_block4);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 24 * 100; j++) {
+    for (int j = 0; j < 64 * 48 * 100; j++) {
       free(input_data_block4[i][j]);
       free(output_data_block4[i][j]);
     }
@@ -539,8 +539,8 @@ int main(int argc, char **argv)
   float ***output_data_block5 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_block5[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
-    output_data_block5[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
+    input_data_block5[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
+    output_data_block5[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_block5;
@@ -551,7 +551,7 @@ int main(int argc, char **argv)
 
   double lower_block5[] = { -3.717531 * pow(10.0, -2.0), 6.260430 * pow(10.0, -1.0)};
   double upper_block5[] = { -3.544025 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_block5[] = { 32, 24 };
+  int cells_new_block5[] = { 64, 48 };
   struct gkyl_rect_grid grid_block5;
   gkyl_rect_grid_init(&grid_block5, 2, lower_block5, upper_block5, cells_new_block5);
 
@@ -579,13 +579,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_block5, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_block5[j][(i * 32 * 24) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_block5[j][(i * 32 * 24) + count] = (float*) malloc(sizeof(float));
+        input_data_block5[j][(i * 64 * 48) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_block5[j][(i * 64 * 48) + count] = (float*) malloc(sizeof(float));
       
-        input_data_block5[j][(i * 32 * 24) + count][0] = ((float)i) / 100.0;
-        input_data_block5[j][(i * 32 * 24) + count][1] = ((float)(count / 24)) / 32.0;
-        input_data_block5[j][(i * 32 * 24) + count][2] = ((float)(count % 24)) / 24.0;
-        output_data_block5[j][(i * 32 * 24) + count][0] = ((float)c_array[j]) / 900.0;
+        input_data_block5[j][(i * 64 * 48) + count][0] = ((float)i) / 100.0;
+        input_data_block5[j][(i * 64 * 48) + count][1] = ((float)(count / 48)) / 64.0;
+        input_data_block5[j][(i * 64 * 48) + count][2] = ((float)(count % 48)) / 48.0;
+        output_data_block5[j][(i * 64 * 48) + count][0] = ((float)c_array[j]) / 900.0;
       }
 
       count += 1;
@@ -594,7 +594,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_block5[i], 12, 100);
-    kann_train_fnn1(ann_block5[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 24 * 100, input_data_block5[i], output_data_block5[i]);
+    kann_train_fnn1(ann_block5[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 48 * 100, input_data_block5[i], output_data_block5[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_b5_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -611,7 +611,7 @@ int main(int argc, char **argv)
   free(t_net_block5);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 24 * 100; j++) {
+    for (int j = 0; j < 64 * 48 * 100; j++) {
       free(input_data_block5[i][j]);
       free(output_data_block5[i][j]);
     }
@@ -642,8 +642,8 @@ int main(int argc, char **argv)
   float ***output_data_block6 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_block6[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
-    output_data_block6[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
+    input_data_block6[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
+    output_data_block6[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_block6;
@@ -654,7 +654,7 @@ int main(int argc, char **argv)
 
   double lower_block6[] = { -3.717531 * pow(10.0, -2.0), -3.141593 };
   double upper_block6[] = { -3.544025 * pow(10.0, -2.0), -1.342996 };
-  int cells_new_block6[] = { 32, 48 };
+  int cells_new_block6[] = { 64, 96 };
   struct gkyl_rect_grid grid_block6;
   gkyl_rect_grid_init(&grid_block6, 2, lower_block6, upper_block6, cells_new_block6);
 
@@ -682,13 +682,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_block6, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_block6[j][(i * 32 * 48) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_block6[j][(i * 32 * 48) + count] = (float*) malloc(sizeof(float));
+        input_data_block6[j][(i * 64 * 96) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_block6[j][(i * 64 * 96) + count] = (float*) malloc(sizeof(float));
       
-        input_data_block6[j][(i * 32 * 48) + count][0] = ((float)i) / 100.0;
-        input_data_block6[j][(i * 32 * 48) + count][1] = ((float)(count / 48)) / 32.0;
-        input_data_block6[j][(i * 32 * 48) + count][2] = ((float)(count % 48)) / 48.0;
-        output_data_block6[j][(i * 32 * 48) + count][0] = ((float)c_array[j]) / 900.0;
+        input_data_block6[j][(i * 64 * 96) + count][0] = ((float)i) / 100.0;
+        input_data_block6[j][(i * 64 * 96) + count][1] = ((float)(count / 96)) / 64.0;
+        input_data_block6[j][(i * 64 * 96) + count][2] = ((float)(count % 96)) / 96.0;
+        output_data_block6[j][(i * 64 * 96) + count][0] = ((float)c_array[j]) / 900.0;
       }
 
       count += 1;
@@ -697,7 +697,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_block6[i], 12, 100);
-    kann_train_fnn1(ann_block6[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 48 * 100, input_data_block6[i], output_data_block6[i]);
+    kann_train_fnn1(ann_block6[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 96 * 100, input_data_block6[i], output_data_block6[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_b6_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -714,7 +714,7 @@ int main(int argc, char **argv)
   free(t_net_block6);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 48 * 100; j++) {
+    for (int j = 0; j < 64 * 96 * 100; j++) {
       free(input_data_block6[i][j]);
       free(output_data_block6[i][j]);
     }
@@ -745,8 +745,8 @@ int main(int argc, char **argv)
   float ***output_data_block7 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_block7[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
-    output_data_block7[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
+    input_data_block7[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
+    output_data_block7[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_block7;
@@ -757,7 +757,7 @@ int main(int argc, char **argv)
 
   double lower_block7[] = { -3.717531 * pow(10.0, -2.0), 1.798597 };
   double upper_block7[] = { -3.544025 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_block7[] = { 32, 48 };
+  int cells_new_block7[] = { 64, 96 };
   struct gkyl_rect_grid grid_block7;
   gkyl_rect_grid_init(&grid_block7, 2, lower_block7, upper_block7, cells_new_block7);
 
@@ -785,13 +785,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_block7, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_block7[j][(i * 32 * 48) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_block7[j][(i * 32 * 48) + count] = (float*) malloc(sizeof(float));
+        input_data_block7[j][(i * 64 * 96) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_block7[j][(i * 64 * 96) + count] = (float*) malloc(sizeof(float));
       
-        input_data_block7[j][(i * 32 * 48) + count][0] = ((float)i) / 100.0;
-        input_data_block7[j][(i * 32 * 48) + count][1] = ((float)(count / 48)) / 32.0;
-        input_data_block7[j][(i * 32 * 48) + count][2] = ((float)(count % 48)) / 48.0;
-        output_data_block7[j][(i * 32 * 48) + count][0] = ((float)c_array[j]) / 900.0;
+        input_data_block7[j][(i * 64 * 96) + count][0] = ((float)i) / 100.0;
+        input_data_block7[j][(i * 64 * 96) + count][1] = ((float)(count / 96)) / 64.0;
+        input_data_block7[j][(i * 64 * 96) + count][2] = ((float)(count % 96)) / 96.0;
+        output_data_block7[j][(i * 64 * 96) + count][0] = ((float)c_array[j]) / 900.0;
       }
 
       count += 1;
@@ -800,7 +800,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_block7[i], 12, 100);
-    kann_train_fnn1(ann_block7[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 48 * 100, input_data_block7[i], output_data_block7[i]);
+    kann_train_fnn1(ann_block7[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 96 * 100, input_data_block7[i], output_data_block7[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_b7_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -817,7 +817,7 @@ int main(int argc, char **argv)
   free(t_net_block7);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 48 * 100; j++) {
+    for (int j = 0; j < 64 * 96 * 100; j++) {
       free(input_data_block7[i][j]);
       free(output_data_block7[i][j]);
     }
@@ -848,8 +848,8 @@ int main(int argc, char **argv)
   float ***output_data_elc_M1_block0 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_elc_M1_block0[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
-    output_data_elc_M1_block0[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
+    input_data_elc_M1_block0[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
+    output_data_elc_M1_block0[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_elc_M1_block0;
@@ -860,7 +860,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block0[] = { -3.717531 * pow(10.0, -2.0), -3.141593 };
   double upper_elc_M1_block0[] = { -3.544025 * pow(10.0, -2.0), 6.260430 * pow(10.0, -1.0) };
-  int cells_new_elc_M1_block0[] = { 32, 24 };
+  int cells_new_elc_M1_block0[] = { 64, 48 };
   struct gkyl_rect_grid grid_elc_M1_block0;
   gkyl_rect_grid_init(&grid_elc_M1_block0, 2, lower_elc_M1_block0, upper_elc_M1_block0, cells_new_elc_M1_block0);
 
@@ -888,13 +888,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_elc_M1_block0, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_elc_M1_block0[j][(i * 32 * 24) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_elc_M1_block0[j][(i * 32 * 24) + count] = (float*) malloc(sizeof(float));
+        input_data_elc_M1_block0[j][(i * 64 * 48) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_elc_M1_block0[j][(i * 64 * 48) + count] = (float*) malloc(sizeof(float));
       
-        input_data_elc_M1_block0[j][(i * 32 * 24) + count][0] = ((float)i) / 100.0;
-        input_data_elc_M1_block0[j][(i * 32 * 24) + count][1] = ((float)(count / 24)) / 32.0;
-        input_data_elc_M1_block0[j][(i * 32 * 24) + count][2] = ((float)(count % 24)) / 24.0;
-        output_data_elc_M1_block0[j][(i * 32 * 24) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
+        input_data_elc_M1_block0[j][(i * 64 * 48) + count][0] = ((float)i) / 100.0;
+        input_data_elc_M1_block0[j][(i * 64 * 48) + count][1] = ((float)(count / 48)) / 64.0;
+        input_data_elc_M1_block0[j][(i * 64 * 48) + count][2] = ((float)(count % 48)) / 48.0;
+        output_data_elc_M1_block0[j][(i * 64 * 48) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
       }
 
       count += 1;
@@ -903,7 +903,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_elc_M1_block0[i], 12, 100);
-    kann_train_fnn1(ann_elc_M1_block0[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 24 * 100, input_data_elc_M1_block0[i], output_data_elc_M1_block0[i]);
+    kann_train_fnn1(ann_elc_M1_block0[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 48 * 100, input_data_elc_M1_block0[i], output_data_elc_M1_block0[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_elcM1_b0_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -920,7 +920,7 @@ int main(int argc, char **argv)
   free(t_net_elc_M1_block0);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 24 * 100; j++) {
+    for (int j = 0; j < 64 * 48 * 100; j++) {
       free(input_data_elc_M1_block0[i][j]);
       free(output_data_elc_M1_block0[i][j]);
     }
@@ -951,8 +951,8 @@ int main(int argc, char **argv)
   float ***output_data_elc_M1_block1 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_elc_M1_block1[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
-    output_data_elc_M1_block1[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
+    input_data_elc_M1_block1[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
+    output_data_elc_M1_block1[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_elc_M1_block1;
@@ -963,7 +963,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block1[] = { -3.544025 * pow(10.0, -2.0), -3.141593 };
   double upper_elc_M1_block1[] = { -3.370519 * pow(10.0, -2.0), -2.271087 };
-  int cells_new_elc_M1_block1[] = { 32, 24 };
+  int cells_new_elc_M1_block1[] = { 64, 48 };
   struct gkyl_rect_grid grid_elc_M1_block1;
   gkyl_rect_grid_init(&grid_elc_M1_block1, 2, lower_elc_M1_block1, upper_elc_M1_block1, cells_new_elc_M1_block1);
 
@@ -991,13 +991,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_elc_M1_block1, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_elc_M1_block1[j][(i * 32 * 24) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_elc_M1_block1[j][(i * 32 * 24) + count] = (float*) malloc(sizeof(float));
+        input_data_elc_M1_block1[j][(i * 64 * 48) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_elc_M1_block1[j][(i * 64 * 48) + count] = (float*) malloc(sizeof(float));
       
-        input_data_elc_M1_block1[j][(i * 32 * 24) + count][0] = ((float)i) / 100.0;
-        input_data_elc_M1_block1[j][(i * 32 * 24) + count][1] = ((float)(count / 24)) / 32.0;
-        input_data_elc_M1_block1[j][(i * 32 * 24) + count][2] = ((float)(count % 24)) / 24.0;
-        output_data_elc_M1_block1[j][(i * 32 * 24) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
+        input_data_elc_M1_block1[j][(i * 64 * 48) + count][0] = ((float)i) / 100.0;
+        input_data_elc_M1_block1[j][(i * 64 * 48) + count][1] = ((float)(count / 48)) / 64.0;
+        input_data_elc_M1_block1[j][(i * 64 * 48) + count][2] = ((float)(count % 48)) / 48.0;
+        output_data_elc_M1_block1[j][(i * 64 * 48) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
       }
 
       count += 1;
@@ -1006,7 +1006,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_elc_M1_block1[i], 12, 100);
-    kann_train_fnn1(ann_elc_M1_block1[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 24 * 100, input_data_elc_M1_block1[i], output_data_elc_M1_block1[i]);
+    kann_train_fnn1(ann_elc_M1_block1[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 48 * 100, input_data_elc_M1_block1[i], output_data_elc_M1_block1[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_elcM1_b1_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -1023,7 +1023,7 @@ int main(int argc, char **argv)
   free(t_net_elc_M1_block1);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 24 * 100; j++) {
+    for (int j = 0; j < 64 * 48 * 100; j++) {
       free(input_data_elc_M1_block1[i][j]);
       free(output_data_elc_M1_block1[i][j]);
     }
@@ -1054,8 +1054,8 @@ int main(int argc, char **argv)
   float ***output_data_elc_M1_block2 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_elc_M1_block2[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
-    output_data_elc_M1_block2[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
+    input_data_elc_M1_block2[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
+    output_data_elc_M1_block2[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_elc_M1_block2;
@@ -1066,7 +1066,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block2[] = { -3.544025 * pow(10.0, -2.0), -2.271087};
   double upper_elc_M1_block2[] = { -3.370519 * pow(10.0, -2.0), 0.0 };
-  int cells_new_elc_M1_block2[] = { 32, 48 };
+  int cells_new_elc_M1_block2[] = { 64, 96 };
   struct gkyl_rect_grid grid_elc_M1_block2;
   gkyl_rect_grid_init(&grid_elc_M1_block2, 2, lower_elc_M1_block2, upper_elc_M1_block2, cells_new_elc_M1_block2);
 
@@ -1094,13 +1094,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_elc_M1_block2, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_elc_M1_block2[j][(i * 32 * 48) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_elc_M1_block2[j][(i * 32 * 48) + count] = (float*) malloc(sizeof(float));
+        input_data_elc_M1_block2[j][(i * 64 * 96) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_elc_M1_block2[j][(i * 64 * 96) + count] = (float*) malloc(sizeof(float));
       
-        input_data_elc_M1_block2[j][(i * 32 * 48) + count][0] = ((float)i) / 100.0;
-        input_data_elc_M1_block2[j][(i * 32 * 48) + count][1] = ((float)(count / 48)) / 32.0;
-        input_data_elc_M1_block2[j][(i * 32 * 48) + count][2] = ((float)(count % 48)) / 48.0;
-        output_data_elc_M1_block2[j][(i * 32 * 48) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
+        input_data_elc_M1_block2[j][(i * 64 * 96) + count][0] = ((float)i) / 100.0;
+        input_data_elc_M1_block2[j][(i * 64 * 96) + count][1] = ((float)(count / 96)) / 64.0;
+        input_data_elc_M1_block2[j][(i * 64 * 96) + count][2] = ((float)(count % 96)) / 96.0;
+        output_data_elc_M1_block2[j][(i * 64 * 96) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
       }
 
       count += 1;
@@ -1109,7 +1109,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_elc_M1_block2[i], 12, 100);
-    kann_train_fnn1(ann_elc_M1_block2[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 48 * 100, input_data_elc_M1_block2[i], output_data_elc_M1_block2[i]);
+    kann_train_fnn1(ann_elc_M1_block2[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 96 * 100, input_data_elc_M1_block2[i], output_data_elc_M1_block2[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_elcM1_b2_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -1126,7 +1126,7 @@ int main(int argc, char **argv)
   free(t_net_elc_M1_block2);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 48 * 100; j++) {
+    for (int j = 0; j < 64 * 96 * 100; j++) {
       free(input_data_elc_M1_block2[i][j]);
       free(output_data_elc_M1_block2[i][j]);
     }
@@ -1157,8 +1157,8 @@ int main(int argc, char **argv)
   float ***output_data_elc_M1_block3 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_elc_M1_block3[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
-    output_data_elc_M1_block3[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
+    input_data_elc_M1_block3[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
+    output_data_elc_M1_block3[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_elc_M1_block3;
@@ -1169,7 +1169,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block3[] = { -3.544025 * pow(10.0, -2.0), 0.0 };
   double upper_elc_M1_block3[] = { -3.370519 * pow(10.0, -2.0), 2.339689 };
-  int cells_new_elc_M1_block3[] = { 32, 48 };
+  int cells_new_elc_M1_block3[] = { 64, 96 };
   struct gkyl_rect_grid grid_elc_M1_block3;
   gkyl_rect_grid_init(&grid_elc_M1_block3, 2, lower_elc_M1_block3, upper_elc_M1_block3, cells_new_elc_M1_block3);
 
@@ -1197,13 +1197,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_elc_M1_block3, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_elc_M1_block3[j][(i * 32 * 48) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_elc_M1_block3[j][(i * 32 * 48) + count] = (float*) malloc(sizeof(float));
+        input_data_elc_M1_block3[j][(i * 64 * 96) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_elc_M1_block3[j][(i * 64 * 96) + count] = (float*) malloc(sizeof(float));
       
-        input_data_elc_M1_block3[j][(i * 32 * 48) + count][0] = ((float)i) / 100.0;
-        input_data_elc_M1_block3[j][(i * 32 * 48) + count][1] = ((float)(count / 48)) / 32.0;
-        input_data_elc_M1_block3[j][(i * 32 * 48) + count][2] = ((float)(count % 48)) / 48.0;
-        output_data_elc_M1_block3[j][(i * 32 * 48) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
+        input_data_elc_M1_block3[j][(i * 64 * 96) + count][0] = ((float)i) / 100.0;
+        input_data_elc_M1_block3[j][(i * 64 * 96) + count][1] = ((float)(count / 96)) / 64.0;
+        input_data_elc_M1_block3[j][(i * 64 * 96) + count][2] = ((float)(count % 96)) / 96.0;
+        output_data_elc_M1_block3[j][(i * 64 * 96) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
       }
 
       count += 1;
@@ -1212,7 +1212,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_elc_M1_block3[i], 12, 100);
-    kann_train_fnn1(ann_elc_M1_block3[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 48 * 100, input_data_elc_M1_block3[i], output_data_elc_M1_block3[i]);
+    kann_train_fnn1(ann_elc_M1_block3[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 96 * 100, input_data_elc_M1_block3[i], output_data_elc_M1_block3[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_elcM1_b3_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -1229,7 +1229,7 @@ int main(int argc, char **argv)
   free(t_net_elc_M1_block3);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 48 * 100; j++) {
+    for (int j = 0; j < 64 * 96 * 100; j++) {
       free(input_data_elc_M1_block3[i][j]);
       free(output_data_elc_M1_block3[i][j]);
     }
@@ -1260,8 +1260,8 @@ int main(int argc, char **argv)
   float ***output_data_elc_M1_block4 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_elc_M1_block4[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
-    output_data_elc_M1_block4[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
+    input_data_elc_M1_block4[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
+    output_data_elc_M1_block4[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_elc_M1_block4;
@@ -1272,7 +1272,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block4[] = { -3.544025 * pow(10.0, -2.0), 2.339689 };
   double upper_elc_M1_block4[] = { -3.370519 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_elc_M1_block4[] = { 32, 24 };
+  int cells_new_elc_M1_block4[] = { 64, 48 };
   struct gkyl_rect_grid grid_elc_M1_block4;
   gkyl_rect_grid_init(&grid_elc_M1_block4, 2, lower_elc_M1_block4, upper_elc_M1_block4, cells_new_elc_M1_block4);
 
@@ -1300,13 +1300,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_elc_M1_block4, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_elc_M1_block4[j][(i * 32 * 24) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_elc_M1_block4[j][(i * 32 * 24) + count] = (float*) malloc(sizeof(float));
+        input_data_elc_M1_block4[j][(i * 64 * 48) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_elc_M1_block4[j][(i * 64 * 48) + count] = (float*) malloc(sizeof(float));
       
-        input_data_elc_M1_block4[j][(i * 32 * 24) + count][0] = ((float)i) / 100.0;
-        input_data_elc_M1_block4[j][(i * 32 * 24) + count][1] = ((float)(count / 24)) / 32.0;
-        input_data_elc_M1_block4[j][(i * 32 * 24) + count][2] = ((float)(count % 24)) / 24.0;
-        output_data_elc_M1_block4[j][(i * 32 * 24) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
+        input_data_elc_M1_block4[j][(i * 64 * 48) + count][0] = ((float)i) / 100.0;
+        input_data_elc_M1_block4[j][(i * 64 * 48) + count][1] = ((float)(count / 48)) / 64.0;
+        input_data_elc_M1_block4[j][(i * 64 * 48) + count][2] = ((float)(count % 48)) / 48.0;
+        output_data_elc_M1_block4[j][(i * 64 * 48) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
       }
 
       count += 1;
@@ -1315,7 +1315,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_elc_M1_block4[i], 12, 100);
-    kann_train_fnn1(ann_elc_M1_block4[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 24 * 100, input_data_elc_M1_block4[i], output_data_elc_M1_block4[i]);
+    kann_train_fnn1(ann_elc_M1_block4[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 48 * 100, input_data_elc_M1_block4[i], output_data_elc_M1_block4[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_elcM1_b4_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -1332,7 +1332,7 @@ int main(int argc, char **argv)
   free(t_net_elc_M1_block4);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 24 * 100; j++) {
+    for (int j = 0; j < 64 * 48 * 100; j++) {
       free(input_data_elc_M1_block4[i][j]);
       free(output_data_elc_M1_block4[i][j]);
     }
@@ -1363,8 +1363,8 @@ int main(int argc, char **argv)
   float ***output_data_elc_M1_block5 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_elc_M1_block5[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
-    output_data_elc_M1_block5[i] = (float**) malloc(32 * 24 * 100 * sizeof(float*));
+    input_data_elc_M1_block5[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
+    output_data_elc_M1_block5[i] = (float**) malloc(64 * 48 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_elc_M1_block5;
@@ -1375,7 +1375,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block5[] = { -3.717531 * pow(10.0, -2.0), 6.260430 * pow(10.0, -1.0)};
   double upper_elc_M1_block5[] = { -3.544025 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_elc_M1_block5[] = { 32, 24 };
+  int cells_new_elc_M1_block5[] = { 64, 48 };
   struct gkyl_rect_grid grid_elc_M1_block5;
   gkyl_rect_grid_init(&grid_elc_M1_block5, 2, lower_elc_M1_block5, upper_elc_M1_block5, cells_new_elc_M1_block5);
 
@@ -1403,13 +1403,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_elc_M1_block5, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_elc_M1_block5[j][(i * 32 * 24) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_elc_M1_block5[j][(i * 32 * 24) + count] = (float*) malloc(sizeof(float));
+        input_data_elc_M1_block5[j][(i * 64 * 48) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_elc_M1_block5[j][(i * 64 * 48) + count] = (float*) malloc(sizeof(float));
       
-        input_data_elc_M1_block5[j][(i * 32 * 24) + count][0] = ((float)i) / 100.0;
-        input_data_elc_M1_block5[j][(i * 32 * 24) + count][1] = ((float)(count / 24)) / 32.0;
-        input_data_elc_M1_block5[j][(i * 32 * 24) + count][2] = ((float)(count % 24)) / 24.0;
-        output_data_elc_M1_block5[j][(i * 32 * 24) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
+        input_data_elc_M1_block5[j][(i * 64 * 48) + count][0] = ((float)i) / 100.0;
+        input_data_elc_M1_block5[j][(i * 64 * 48) + count][1] = ((float)(count / 48)) / 64.0;
+        input_data_elc_M1_block5[j][(i * 64 * 48) + count][2] = ((float)(count % 48)) / 48.0;
+        output_data_elc_M1_block5[j][(i * 64 * 48) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
       }
 
       count += 1;
@@ -1418,7 +1418,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_elc_M1_block5[i], 12, 100);
-    kann_train_fnn1(ann_elc_M1_block5[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 24 * 100, input_data_elc_M1_block5[i], output_data_elc_M1_block5[i]);
+    kann_train_fnn1(ann_elc_M1_block5[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 48 * 100, input_data_elc_M1_block5[i], output_data_elc_M1_block5[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_elcM1_b5_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -1435,7 +1435,7 @@ int main(int argc, char **argv)
   free(t_net_elc_M1_block5);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 24 * 100; j++) {
+    for (int j = 0; j < 64 * 48 * 100; j++) {
       free(input_data_elc_M1_block5[i][j]);
       free(output_data_elc_M1_block5[i][j]);
     }
@@ -1466,8 +1466,8 @@ int main(int argc, char **argv)
   float ***output_data_elc_M1_block6 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_elc_M1_block6[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
-    output_data_elc_M1_block6[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
+    input_data_elc_M1_block6[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
+    output_data_elc_M1_block6[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_elc_M1_block6;
@@ -1478,7 +1478,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block6[] = { -3.717531 * pow(10.0, -2.0), -3.141593 };
   double upper_elc_M1_block6[] = { -3.544025 * pow(10.0, -2.0), -1.342996 };
-  int cells_new_elc_M1_block6[] = { 32, 48 };
+  int cells_new_elc_M1_block6[] = { 64, 96 };
   struct gkyl_rect_grid grid_elc_M1_block6;
   gkyl_rect_grid_init(&grid_elc_M1_block6, 2, lower_elc_M1_block6, upper_elc_M1_block6, cells_new_elc_M1_block6);
 
@@ -1506,13 +1506,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_elc_M1_block6, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_elc_M1_block6[j][(i * 32 * 48) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_elc_M1_block6[j][(i * 32 * 48) + count] = (float*) malloc(sizeof(float));
+        input_data_elc_M1_block6[j][(i * 64 * 96) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_elc_M1_block6[j][(i * 64 * 96) + count] = (float*) malloc(sizeof(float));
       
-        input_data_elc_M1_block6[j][(i * 32 * 48) + count][0] = ((float)i) / 100.0;
-        input_data_elc_M1_block6[j][(i * 32 * 48) + count][1] = ((float)(count / 48)) / 32.0;
-        input_data_elc_M1_block6[j][(i * 32 * 48) + count][2] = ((float)(count % 48)) / 48.0;
-        output_data_elc_M1_block6[j][(i * 32 * 48) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
+        input_data_elc_M1_block6[j][(i * 64 * 96) + count][0] = ((float)i) / 100.0;
+        input_data_elc_M1_block6[j][(i * 64 * 96) + count][1] = ((float)(count / 96)) / 64.0;
+        input_data_elc_M1_block6[j][(i * 64 * 96) + count][2] = ((float)(count % 96)) / 96.0;
+        output_data_elc_M1_block6[j][(i * 64 * 96) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
       }
 
       count += 1;
@@ -1521,7 +1521,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_elc_M1_block6[i], 12, 100);
-    kann_train_fnn1(ann_elc_M1_block6[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 48 * 100, input_data_elc_M1_block6[i], output_data_elc_M1_block6[i]);
+    kann_train_fnn1(ann_elc_M1_block6[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 96 * 100, input_data_elc_M1_block6[i], output_data_elc_M1_block6[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_elcM1_b6_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -1538,7 +1538,7 @@ int main(int argc, char **argv)
   free(t_net_elc_M1_block6);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 48 * 100; j++) {
+    for (int j = 0; j < 64 * 96 * 100; j++) {
       free(input_data_elc_M1_block6[i][j]);
       free(output_data_elc_M1_block6[i][j]);
     }
@@ -1569,8 +1569,8 @@ int main(int argc, char **argv)
   float ***output_data_elc_M1_block7 = (float***) malloc(4 * sizeof(float**));
   
   for (int i = 0; i < 4; i++) {
-    input_data_elc_M1_block7[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
-    output_data_elc_M1_block7[i] = (float**) malloc(32 * 48 * 100 * sizeof(float*));
+    input_data_elc_M1_block7[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
+    output_data_elc_M1_block7[i] = (float**) malloc(64 * 96 * 100 * sizeof(float*));
   }
 
   struct gkyl_comm *comm_elc_M1_block7;
@@ -1581,7 +1581,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block7[] = { -3.717531 * pow(10.0, -2.0), 1.798597 };
   double upper_elc_M1_block7[] = { -3.544025 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_elc_M1_block7[] = { 32, 48 };
+  int cells_new_elc_M1_block7[] = { 64, 96 };
   struct gkyl_rect_grid grid_elc_M1_block7;
   gkyl_rect_grid_init(&grid_elc_M1_block7, 2, lower_elc_M1_block7, upper_elc_M1_block7, cells_new_elc_M1_block7);
 
@@ -1609,13 +1609,13 @@ int main(int argc, char **argv)
       const double *c_array = gkyl_array_cfetch(arr_elc_M1_block7, loc);
 
       for (int j = 0; j < 4; j++) {
-        input_data_elc_M1_block7[j][(i * 32 * 48) + count] = (float*) malloc(3 * sizeof(float));
-        output_data_elc_M1_block7[j][(i * 32 * 48) + count] = (float*) malloc(sizeof(float));
+        input_data_elc_M1_block7[j][(i * 64 * 96) + count] = (float*) malloc(3 * sizeof(float));
+        output_data_elc_M1_block7[j][(i * 64 * 96) + count] = (float*) malloc(sizeof(float));
       
-        input_data_elc_M1_block7[j][(i * 32 * 48) + count][0] = ((float)i) / 100.0;
-        input_data_elc_M1_block7[j][(i * 32 * 48) + count][1] = ((float)(count / 48)) / 32.0;
-        input_data_elc_M1_block7[j][(i * 32 * 48) + count][2] = ((float)(count % 48)) / 48.0;
-        output_data_elc_M1_block7[j][(i * 32 * 48) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
+        input_data_elc_M1_block7[j][(i * 64 * 96) + count][0] = ((float)i) / 100.0;
+        input_data_elc_M1_block7[j][(i * 64 * 96) + count][1] = ((float)(count / 96)) / 64.0;
+        input_data_elc_M1_block7[j][(i * 64 * 96) + count][2] = ((float)(count % 96)) / 96.0;
+        output_data_elc_M1_block7[j][(i * 64 * 96) + count][0] = ((float)c_array[j]) / pow(10.0, 26.0);
       }
 
       count += 1;
@@ -1624,7 +1624,7 @@ int main(int argc, char **argv)
 
   for (int i = 0; i < 4; i++) {
     kann_mt(ann_elc_M1_block7[i], 12, 100);
-    kann_train_fnn1(ann_elc_M1_block7[i], 0.0001f, 64, 50, 10, 0.1f, 32 * 48 * 100, input_data_elc_M1_block7[i], output_data_elc_M1_block7[i]);
+    kann_train_fnn1(ann_elc_M1_block7[i], 0.0001f, 64, 50, 10, 0.1f, 64 * 96 * 100, input_data_elc_M1_block7[i], output_data_elc_M1_block7[i]);
 
     const char *fmt = "model_weights/gk_multib_nstxu_2x2v_p1_elcM1_b7_%d_neural_net.dat";
     int sz = snprintf(0, 0, fmt, i);
@@ -1641,7 +1641,7 @@ int main(int argc, char **argv)
   free(t_net_elc_M1_block7);
 
   for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 32 * 48 * 100; j++) {
+    for (int j = 0; j < 64 * 96 * 100; j++) {
       free(input_data_elc_M1_block7[i][j]);
       free(output_data_elc_M1_block7[i][j]);
     }
