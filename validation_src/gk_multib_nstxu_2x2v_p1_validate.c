@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
   double lower_block0[] = { -3.717531 * pow(10.0, -2.0), -3.141593 };
   double upper_block0[] = { -3.544025 * pow(10.0, -2.0), 6.260430 * pow(10.0, -1.0) };
-  int cells_new_block0[] = { 32, 24 };
+  int cells_new_block0[] = { 64, 48 };
   struct gkyl_rect_grid grid_block0;
   gkyl_rect_grid_init(&grid_block0, 2, lower_block0, upper_block0, cells_new_block0);
 
@@ -63,8 +63,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 24)) / 32.0;
-        input_data[2] = ((float)(count % 24)) / 24.0;
+        input_data[1] = ((float)(count / 48)) / 64.0;
+        input_data[2] = ((float)(count % 48)) / 48.0;
       
         output_data = kann_apply1(ann_block0[j], input_data);
 
@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 
   double lower_block1[] = { -3.544025 * pow(10.0, -2.0), -3.141593 };
   double upper_block1[] = { -3.370519 * pow(10.0, -2.0), -2.271087 };
-  int cells_new_block1[] = { 32, 24 };
+  int cells_new_block1[] = { 64, 48 };
   struct gkyl_rect_grid grid_block1;
   gkyl_rect_grid_init(&grid_block1, 2, lower_block1, upper_block1, cells_new_block1);
 
@@ -154,8 +154,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 24)) / 32.0;
-        input_data[2] = ((float)(count % 24)) / 24.0;
+        input_data[1] = ((float)(count / 48)) / 64.0;
+        input_data[2] = ((float)(count % 48)) / 48.0;
       
         output_data = kann_apply1(ann_block1[j], input_data);
 
@@ -213,7 +213,7 @@ int main(int argc, char **argv)
 
   double lower_block2[] = { -3.544025 * pow(10.0, -2.0), -2.271087};
   double upper_block2[] = { -3.370519 * pow(10.0, -2.0), 0.0 };
-  int cells_new_block2[] = { 32, 48 };
+  int cells_new_block2[] = { 64, 96 };
   struct gkyl_rect_grid grid_block2;
   gkyl_rect_grid_init(&grid_block2, 2, lower_block2, upper_block2, cells_new_block2);
 
@@ -245,8 +245,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 48)) / 32.0;
-        input_data[2] = ((float)(count % 48)) / 48.0;
+        input_data[1] = ((float)(count / 96)) / 64.0;
+        input_data[2] = ((float)(count % 96)) / 96.0;
       
         output_data = kann_apply1(ann_block2[j], input_data);
 
@@ -304,7 +304,7 @@ int main(int argc, char **argv)
 
   double lower_block3[] = { -3.544025 * pow(10.0, -2.0), 0.0 };
   double upper_block3[] = { -3.370519 * pow(10.0, -2.0), 2.339689 };
-  int cells_new_block3[] = { 32, 48 };
+  int cells_new_block3[] = { 64, 96 };
   struct gkyl_rect_grid grid_block3;
   gkyl_rect_grid_init(&grid_block3, 2, lower_block3, upper_block3, cells_new_block3);
 
@@ -336,8 +336,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 48)) / 32.0;
-        input_data[2] = ((float)(count % 48)) / 48.0;
+        input_data[1] = ((float)(count / 96)) / 64.0;
+        input_data[2] = ((float)(count % 96)) / 96.0;
       
         output_data = kann_apply1(ann_block3[j], input_data);
 
@@ -395,7 +395,7 @@ int main(int argc, char **argv)
 
   double lower_block4[] = { -3.544025 * pow(10.0, -2.0), 2.339689 };
   double upper_block4[] = { -3.370519 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_block4[] = { 32, 24 };
+  int cells_new_block4[] = { 64, 48 };
   struct gkyl_rect_grid grid_block4;
   gkyl_rect_grid_init(&grid_block4, 2, lower_block4, upper_block4, cells_new_block4);
 
@@ -427,8 +427,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 24)) / 32.0;
-        input_data[2] = ((float)(count % 24)) / 24.0;
+        input_data[1] = ((float)(count / 48)) / 64.0;
+        input_data[2] = ((float)(count % 48)) / 48.0;
       
         output_data = kann_apply1(ann_block4[j], input_data);
 
@@ -486,7 +486,7 @@ int main(int argc, char **argv)
 
   double lower_block5[] = { -3.717531 * pow(10.0, -2.0), 6.260430 * pow(10.0, -1.0)};
   double upper_block5[] = { -3.544025 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_block5[] = { 32, 24 };
+  int cells_new_block5[] = { 64, 48 };
   struct gkyl_rect_grid grid_block5;
   gkyl_rect_grid_init(&grid_block5, 2, lower_block5, upper_block5, cells_new_block5);
 
@@ -518,8 +518,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 24)) / 32.0;
-        input_data[2] = ((float)(count % 24)) / 24.0;
+        input_data[1] = ((float)(count / 48)) / 64.0;
+        input_data[2] = ((float)(count % 48)) / 48.0;
       
         output_data = kann_apply1(ann_block5[j], input_data);
 
@@ -577,7 +577,7 @@ int main(int argc, char **argv)
 
   double lower_block6[] = { -3.717531 * pow(10.0, -2.0), -3.141593 };
   double upper_block6[] = { -3.544025 * pow(10.0, -2.0), -1.342996 };
-  int cells_new_block6[] = { 32, 48 };
+  int cells_new_block6[] = { 64, 96 };
   struct gkyl_rect_grid grid_block6;
   gkyl_rect_grid_init(&grid_block6, 2, lower_block6, upper_block6, cells_new_block6);
 
@@ -609,8 +609,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 48)) / 32.0;
-        input_data[2] = ((float)(count % 48)) / 48.0;
+        input_data[1] = ((float)(count / 96)) / 64.0;
+        input_data[2] = ((float)(count % 96)) / 96.0;
       
         output_data = kann_apply1(ann_block6[j], input_data);
 
@@ -668,7 +668,7 @@ int main(int argc, char **argv)
 
   double lower_block7[] = { -3.717531 * pow(10.0, -2.0), 1.798597 };
   double upper_block7[] = { -3.544025 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_block7[] = { 32, 48 };
+  int cells_new_block7[] = { 64, 96 };
   struct gkyl_rect_grid grid_block7;
   gkyl_rect_grid_init(&grid_block7, 2, lower_block7, upper_block7, cells_new_block7);
 
@@ -700,8 +700,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 48)) / 32.0;
-        input_data[2] = ((float)(count % 48)) / 48.0;
+        input_data[1] = ((float)(count / 96)) / 64.0;
+        input_data[2] = ((float)(count % 96)) / 96.0;
       
         output_data = kann_apply1(ann_block7[j], input_data);
 
@@ -759,7 +759,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block0[] = { -3.717531 * pow(10.0, -2.0), -3.141593 };
   double upper_elc_M1_block0[] = { -3.544025 * pow(10.0, -2.0), 6.260430 * pow(10.0, -1.0) };
-  int cells_new_elc_M1_block0[] = { 32, 24 };
+  int cells_new_elc_M1_block0[] = { 64, 48 };
   struct gkyl_rect_grid grid_elc_M1_block0;
   gkyl_rect_grid_init(&grid_elc_M1_block0, 2, lower_elc_M1_block0, upper_elc_M1_block0, cells_new_elc_M1_block0);
 
@@ -791,8 +791,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 24)) / 32.0;
-        input_data[2] = ((float)(count % 24)) / 24.0;
+        input_data[1] = ((float)(count / 48)) / 64.0;
+        input_data[2] = ((float)(count % 48)) / 48.0;
       
         output_data = kann_apply1(ann_elc_M1_block0[j], input_data);
 
@@ -850,7 +850,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block1[] = { -3.544025 * pow(10.0, -2.0), -3.141593 };
   double upper_elc_M1_block1[] = { -3.370519 * pow(10.0, -2.0), -2.271087 };
-  int cells_new_elc_M1_block1[] = { 32, 24 };
+  int cells_new_elc_M1_block1[] = { 64, 48 };
   struct gkyl_rect_grid grid_elc_M1_block1;
   gkyl_rect_grid_init(&grid_elc_M1_block1, 2, lower_elc_M1_block1, upper_elc_M1_block1, cells_new_elc_M1_block1);
 
@@ -882,8 +882,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 24)) / 32.0;
-        input_data[2] = ((float)(count % 24)) / 24.0;
+        input_data[1] = ((float)(count / 48)) / 64.0;
+        input_data[2] = ((float)(count % 48)) / 48.0;
       
         output_data = kann_apply1(ann_elc_M1_block1[j], input_data);
 
@@ -941,7 +941,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block2[] = { -3.544025 * pow(10.0, -2.0), -2.271087};
   double upper_elc_M1_block2[] = { -3.370519 * pow(10.0, -2.0), 0.0 };
-  int cells_new_elc_M1_block2[] = { 32, 48 };
+  int cells_new_elc_M1_block2[] = { 64, 96 };
   struct gkyl_rect_grid grid_elc_M1_block2;
   gkyl_rect_grid_init(&grid_elc_M1_block2, 2, lower_elc_M1_block2, upper_elc_M1_block2, cells_new_elc_M1_block2);
 
@@ -973,8 +973,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 48)) / 32.0;
-        input_data[2] = ((float)(count % 48)) / 48.0;
+        input_data[1] = ((float)(count / 96)) / 64.0;
+        input_data[2] = ((float)(count % 96)) / 96.0;
       
         output_data = kann_apply1(ann_elc_M1_block2[j], input_data);
 
@@ -1032,7 +1032,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block3[] = { -3.544025 * pow(10.0, -2.0), 0.0 };
   double upper_elc_M1_block3[] = { -3.370519 * pow(10.0, -2.0), 2.339689 };
-  int cells_new_elc_M1_block3[] = { 32, 48 };
+  int cells_new_elc_M1_block3[] = { 64, 96 };
   struct gkyl_rect_grid grid_elc_M1_block3;
   gkyl_rect_grid_init(&grid_elc_M1_block3, 2, lower_elc_M1_block3, upper_elc_M1_block3, cells_new_elc_M1_block3);
 
@@ -1064,8 +1064,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 48)) / 32.0;
-        input_data[2] = ((float)(count % 48)) / 48.0;
+        input_data[1] = ((float)(count / 96)) / 64.0;
+        input_data[2] = ((float)(count % 96)) / 96.0;
       
         output_data = kann_apply1(ann_elc_M1_block3[j], input_data);
 
@@ -1123,7 +1123,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block4[] = { -3.544025 * pow(10.0, -2.0), 2.339689 };
   double upper_elc_M1_block4[] = { -3.370519 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_elc_M1_block4[] = { 32, 24 };
+  int cells_new_elc_M1_block4[] = { 64, 48 };
   struct gkyl_rect_grid grid_elc_M1_block4;
   gkyl_rect_grid_init(&grid_elc_M1_block4, 2, lower_elc_M1_block4, upper_elc_M1_block4, cells_new_elc_M1_block4);
 
@@ -1155,8 +1155,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 24)) / 32.0;
-        input_data[2] = ((float)(count % 24)) / 24.0;
+        input_data[1] = ((float)(count / 48)) / 64.0;
+        input_data[2] = ((float)(count % 48)) / 48.0;
       
         output_data = kann_apply1(ann_elc_M1_block4[j], input_data);
 
@@ -1214,7 +1214,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block5[] = { -3.717531 * pow(10.0, -2.0), 6.260430 * pow(10.0, -1.0)};
   double upper_elc_M1_block5[] = { -3.544025 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_elc_M1_block5[] = { 32, 24 };
+  int cells_new_elc_M1_block5[] = { 64, 48 };
   struct gkyl_rect_grid grid_elc_M1_block5;
   gkyl_rect_grid_init(&grid_elc_M1_block5, 2, lower_elc_M1_block5, upper_elc_M1_block5, cells_new_elc_M1_block5);
 
@@ -1246,8 +1246,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 24)) / 32.0;
-        input_data[2] = ((float)(count % 24)) / 24.0;
+        input_data[1] = ((float)(count / 48)) / 64.0;
+        input_data[2] = ((float)(count % 48)) / 48.0;
       
         output_data = kann_apply1(ann_elc_M1_block5[j], input_data);
 
@@ -1305,7 +1305,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block6[] = { -3.717531 * pow(10.0, -2.0), -3.141593 };
   double upper_elc_M1_block6[] = { -3.544025 * pow(10.0, -2.0), -1.342996 };
-  int cells_new_elc_M1_block6[] = { 32, 48 };
+  int cells_new_elc_M1_block6[] = { 64, 96 };
   struct gkyl_rect_grid grid_elc_M1_block6;
   gkyl_rect_grid_init(&grid_elc_M1_block6, 2, lower_elc_M1_block6, upper_elc_M1_block6, cells_new_elc_M1_block6);
 
@@ -1337,8 +1337,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 48)) / 32.0;
-        input_data[2] = ((float)(count % 48)) / 48.0;
+        input_data[1] = ((float)(count / 96)) / 64.0;
+        input_data[2] = ((float)(count % 96)) / 96.0;
       
         output_data = kann_apply1(ann_elc_M1_block6[j], input_data);
 
@@ -1396,7 +1396,7 @@ int main(int argc, char **argv)
 
   double lower_elc_M1_block7[] = { -3.717531 * pow(10.0, -2.0), 1.798597 };
   double upper_elc_M1_block7[] = { -3.544025 * pow(10.0, -2.0), 3.141593 };
-  int cells_new_elc_M1_block7[] = { 32, 48 };
+  int cells_new_elc_M1_block7[] = { 64, 96 };
   struct gkyl_rect_grid grid_elc_M1_block7;
   gkyl_rect_grid_init(&grid_elc_M1_block7, 2, lower_elc_M1_block7, upper_elc_M1_block7, cells_new_elc_M1_block7);
 
@@ -1428,8 +1428,8 @@ int main(int argc, char **argv)
         const float *output_data;
 
         input_data[0] = ((float)i) / 100.0;
-        input_data[1] = ((float)(count / 48)) / 32.0;
-        input_data[2] = ((float)(count % 48)) / 48.0;
+        input_data[1] = ((float)(count / 96)) / 64.0;
+        input_data[2] = ((float)(count % 96)) / 96.0;
       
         output_data = kann_apply1(ann_elc_M1_block7[j], input_data);
 
